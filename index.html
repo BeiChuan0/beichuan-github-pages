@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<head class="noisework.cn">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>北川的小站</title>
+	<link rel="icon" href="./static/img/favicon.ico">
+	<meta name="description" content="个人引导页，展示个人网站和项目">
+	<meta name="keywords" content="个人主页,引导页,个人网站">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="./static/css/style.css">
+	<link rel="stylesheet" href="./static/css/root.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="stylesheet" href="./static/css/Right.css">
+	<link rel="stylesheet" type="text/css" href="./static/css/loading.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+	<script src="./static/js/Right.js"></script>
+	<style>
+		.social-icons {
+			display: flex;
+			gap: 15px;
+			margin: 20px 0;
+			background: rgba(0, 0, 0, 0.2);
+			padding: 15px;
+			border-radius: 10px;
+			backdrop-filter: blur(10px);
+		}
+
+		.social-icon-link {
+			color: #fff;
+			text-decoration: none;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 10px;
+			background: rgba(31, 1, 1, 0.1);
+			transition: all 0.3s ease;
+		}
+
+		.social-icon-link i {
+			font-size: 1.2em;
+			transition: all 0.3s ease;
+		}
+
+		.social-icon-link:hover {
+			transform: translateY(-3px);
+			background: rgba(255, 255, 255, 0.2);
+		}
+
+		.social-icon-link:hover i {
+			color: #00ffff;
+		}
+
+		.social-icon-tooltip {
+			position: absolute;
+			bottom: -30px;
+			left: 50%;
+			transform: translateX(-50%);
+			background-color: rgba(0, 0, 0, 0.8);
+			color: white;
+			padding: 4px 8px;
+			border-radius: 4px;
+			font-size: 12px;
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
+			white-space: nowrap;
+			z-index: 1000;
+		}
+
+		.social-icon-link:hover .social-icon-tooltip {
+			opacity: 1;
+			visibility: visible;
+		}
+	</style>
+</head>
+<body>
+	 <!-- loading加载--> 
+	 <div id="spinner-container">
+        <div class="spinner"></div>
+    </div>
+	 <!-- 右键菜单 -->
+	 <body oncontextmenu="openMenu(event)">
+		<div class="menu">
+			<ul class="menu-list01">
+				<li class="menu-item" onclick="toggleFullScreen()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+						<path d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/>
+					</svg>
+					<span style="margin-left: 2px;">全屏</span>
+				</li>
+				<li class="menu-item" onclick="refreshPage()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z"/></svg>
+					<span style="margin-left: 2.3px;">刷新</span>
+				</li>
+				<li class="menu-item" onclick="goBack()">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96L0 416zM128 256c0-6.7 2.8-13 7.7-17.6l112-104c7-6.5 17.2-8.2 25.9-4.4s14.4 12.5 14.4 22l0 208c0 9.5-5.7 18.2-14.4 22s-18.9 2.1-25.9-4.4l-112-104c-4.9-4.5-7.7-10.9-7.7-17.6z"/></svg>
+					<span style="margin-left: 2.7px;">返回</span>
+				</li>
+				<li class="menu-item" onclick="pop('./static/img/weixin.png')">
+					<svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+						<path d="M385.2 167.6c6.4 0 12.6 .3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2 .1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3 .1 10-9.9 19.6-24.4 19.6z"/>
+					</svg>
+					<span style="margin-left: -4.5px;">&nbsp;联系</span>
+				</li>
+			</ul>
+		</div>
+		 <!--音乐-->
+		 <link rel="stylesheet" href="./static/css/APlayer.min.css">  
+		 <script src="./static/js/jquery.min.js"></script>
+		 <script src="./static/js/APlayer.min.js"></script>
+		 <script src="./static/js/Meting.min.js"></script>
+		 <!-- 在手机尺寸下显示的导航按钮 -->
+		 <div class="mobile-nav-button">
+			<i class="fa-solid fa-list"></i>
+			</div>  
+	  <!--侧边-->
+	<div class="noise-filter"></div>
+	<div class="noise-main">
+		<div class="noise-left">
+			<div class="logo" style="background-image: url(./static/img/logo4.png);">
+			</div>
+			 <!-- 坐标.个性签名-->
+			 <div class="left-div left-des">
+				<div class="left-des-item"><i class="fa-solid fa-location-dot"></i><span>地球</span></div>
+				<div class="left-des-item"><i class="fa-solid fa-user-astronaut"></i><span>心中无女人，代码自然神</span></div>
+			</div>
+			<!-- 标签-->
+			<div class="left-div left-tag">
+				<div class="left-tag-item">💻数码科技爱好者
+				</div>
+				<div class="left-tag-item">🗞️Vue
+				</div>
+				<div class="left-tag-item">🎉Efficiency
+				</div>
+				<div class="left-tag-item">🤖️AI
+				</div>
+				<div class="left-tag-item">🖥️Windows
+				</div>
+				<div class="left-tag-item">🎥剪辑
+				</div>
+				<div class="left-tag-item">⌨️Java
+				</div>
+				<div class="left-tag-item">📸摄影</div>
+			</div>
+			<!-- 时间代码-->
+		    <div class="left-div left-time">
+			<ul id="line1">	
+				<div id="lbl"></div>
+				<div id="clock"></div>			
+			</ul>
+		   </div>
+	    	<!-- 时间结束-->
+		<!-- 音乐挂件代码-->
+		<div class="left-div-music">
+			<div class="aplayer-wrap">
+				<meting-js
+					server="netease"
+					type="playlist"
+					id="2898229193"
+					theme="#198964"
+					fixed="false"
+					list-folded="false"
+					autoplay="false"
+					order="random"
+					loop="all"
+					preload="auto"
+					volume="0.7">
+				</meting-js>
+			</div>
+		</div>
+		<!-- 音乐挂件结束 -->
+	    <!-- 随机一言代码-->
+			<div class="left-div left-time">
+				<ul id="line1">
+						<div class="container">
+							<div class="hitokoto-container">
+								<span id="hitokoto-content">正在获取中...</span>
+								<div class="hitokoto-info">
+									<span id="hitokoto-from"></span>
+									<span id="hitokoto-creator"></span>
+								</div>
+							</div>
+						</div>
+				</ul>
+			</div>
+			<!-- 随机一言结束-->
+			<!-- 书摘图片 -->
+			<!-- <div class="left-div left-time">
+				<ul id="line1">
+					<div class="art-text-container">
+						<img id="artTextImage" src="" alt="加载中..." style="width: 100%; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+					</div>
+				</ul>
+			</div> -->
+			<!-- 书摘图片结束 -->
+	    <!-- 摸鱼人日历 -->
+			<div class="left-div left-time">
+				<ul id="line">
+					<div class="moyu-header">
+						<div class="moyu-title">
+							<i class="fa-solid fa-fish"></i> 摸鱼人日历
+						</div>
+					</div>
+					<div class="moyu-container" onclick="pop(document.getElementById('moyuImage').src)">
+						<img id="moyuImage" src="" alt="加载中..." style="width: 100%; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;">
+					</div>
+				</ul>
+			</div>
+			<!-- 摸鱼人日历结束 -->
+			<!-- 微博热搜 -->
+			<div class="left-div left-time">
+				<ul id="line2">
+					<div class="weibo-hot">
+						<div class="weibo-title">
+							<i class="fa-brands fa-weibo"></i> 微博热搜
+						</div>
+						<div class="weibo-list" id="weiboHotList">
+							正在加载热搜...
+						</div>
+					</div>
+				</ul>
+			</div>
+			<!-- 微博热搜结束 -->
+		</div>
+	
+		<div class="noise-right">
+			<header>
+				<!-- 手机页面头部logo -->		
+				<div class="index-logo" style="background-image: url(./static/img/logo4.png);">
+				</div>
+				<div class="welcome">⭐️
+					<div class="welcome-text">
+						<span class="gradientText">欢迎来到我的个人主页</span>
+						<a href="/" target="_blank" class="home-link">主页</a>
+					</div>
+				</div>
+				<div class="description">👏<span class="purpleText">欢迎访问我的个人网站！</span> 这是我的个人引导页。</span>
+				</div>
+				<div class="social-icons">
+					<a href="/" class="social-icon-link" target="_blank">
+						<i class="fa-brands fa-github"></i>
+						<span class="social-icon-tooltip">Github</span>
+					</a>
+					<a href="/" class="social-icon-link" target="_blank">
+						<i class="fa-brands fa-twitter"></i>
+						<span class="social-icon-tooltip">Twitter</span>
+					</a>
+					<a href="/" class="social-icon-link" target="_blank">
+						<i class="fa-brands fa-telegram"></i>
+						<span class="social-icon-tooltip">Telegram</span>
+					</a>
+					<a href="/" class="social-icon-link" target="_blank">
+						<i class="fa-brands fa-qq"></i>
+						<span class="social-icon-tooltip">QQ</span>
+					</a>
+					<a href="javascript:void(0)" onclick="pop('./static/img/weixin.png')" class="social-icon-link">
+						<i class="fa-brands fa-weixin"></i>
+						<span class="social-icon-tooltip">微信</span>
+					</a>
+					<a href="/" class="social-icon-link" target="_blank">
+						<i class="fa-brands fa-discord"></i>
+						<span class="social-icon-tooltip">Discord</span>
+					</a>
+				</div>
+				<!--图片弹出pop容器-->
+				<div id="imagePopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000;">
+					<img id="popupImage" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);" src="" alt="Popup Image">
+					<a href="javascript:void(0)" onclick="closePopup()" style="position:absolute; top:10px; right:10px; color:white; font-size:24px;">&times;</a>
+				</div>
+			</header>
+			
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-star"></i>我的项目
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">Web项目</button>
+								<button class="sub-category-btn">Vue项目</button>
+								<button class="sub-category-btn">boot项目</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>个人博客</h3>
+										<p>基于Hexo的静态博客</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i16.png" alt="博客">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>在线相册</h3>
+										<p>Web图片管理系统</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i17.png" alt="相册">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>任务管理</h3>
+										<p>Web待办事项管理</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i31.png" alt="任务">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>文件分享</h3>
+										<p>Web文件共享平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i21.png" alt="文件">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-star"></i>常用工具
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">开发工具</button>
+								<button class="sub-category-btn">设计资源</button>
+								<button class="sub-category-btn">官方文档</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://code.visualstudio.com" target="_blank">
+									<div class="site-info">
+										<h3>VS Code</h3>
+										<p>强大的代码编辑器</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i8.png" alt="VS Code">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.jetbrains.com" target="_blank">
+									<div class="site-info">
+										<h3>JetBrains</h3>
+										<p>专业IDE工具集</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i15.png" alt="JetBrains">
+									</div>
+								</a>
+								<a class="site-item" href="https://git-scm.com" target="_blank">
+									<div class="site-info">
+										<h3>Git</h3>
+										<p>版本控制工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i37.png" alt="Git">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.postman.com" target="_blank">
+									<div class="site-info">
+										<h3>Postman</h3>
+										<p>API开发测试工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i14.png" alt="Postman">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-graduation-cap"></i>学习站点
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">在线课程平台</button>
+								<button class="sub-category-btn">学术文献资源</button>
+								<button class="sub-category-btn">语言学习工具</button>
+								<button class="sub-category-btn">知识社区</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://www.coursera.org" target="_blank">
+									<div class="site-info">
+										<h3>Coursera</h3>
+										<p>全球知名在线教育平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i1.png" alt="Coursera">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.udemy.com" target="_blank">
+									<div class="site-info">
+										<h3>Udemy</h3>
+										<p>实用技能学习平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i2.png" alt="Udemy">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.edx.org" target="_blank">
+									<div class="site-info">
+										<h3>edX</h3>
+										<p>免费大学课程平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i3.png" alt="edX">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.codecademy.com" target="_blank">
+									<div class="site-info">
+										<h3>Codecademy</h3>
+										<p>交互式编程学习</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i4.png" alt="Codecademy">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-gamepad"></i>游戏资源
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">游戏平台</button>
+								<button class="sub-category-btn">攻略资源</button>
+								<button class="sub-category-btn">联机工具</button>
+								<button class="sub-category-btn">游戏开发</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://store.steampowered.com" target="_blank">
+									<div class="site-info">
+										<h3>Steam</h3>
+										<p>全球最大游戏平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i5.png" alt="Steam">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.epicgames.com" target="_blank">
+									<div class="site-info">
+										<h3>Epic Games</h3>
+										<p>免费游戏资源</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i6.png" alt="Epic">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.gog.com" target="_blank">
+									<div class="site-info">
+										<h3>GOG</h3>
+										<p>怀旧游戏平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i7.png" alt="GOG">
+									</div>
+								</a>
+								<a class="site-item" href="https://unity.com" target="_blank">
+									<div class="site-info">
+										<h3>Unity</h3>
+										<p>游戏开发引擎</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i8.png" alt="Unity">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-code"></i>开发工具
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">编程开发</button>
+								<button class="sub-category-btn">设计协作</button>
+								<button class="sub-category-btn">运维测试</button>
+								<button class="sub-category-btn">开发社区</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://github.com" target="_blank">
+									<div class="site-info">
+										<h3>GitHub</h3>
+										<p>代码托管平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i9.png" alt="GitHub">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.figma.com" target="_blank">
+									<div class="site-info">
+										<h3>Figma</h3>
+										<p>UI设计工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i10.png" alt="Figma">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.docker.com" target="_blank">
+									<div class="site-info">
+										<h3>Docker</h3>
+										<p>容器化平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i11.png" alt="Docker">
+									</div>
+								</a>
+								<a class="site-item" href="https://stackoverflow.com" target="_blank">
+									<div class="site-info">
+										<h3>Stack Overflow</h3>
+										<p>开发者问答社区</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i12.png" alt="Stack Overflow">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-film"></i>影音娱乐
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">视频平台</button>
+								<button class="sub-category-btn">音乐播客</button>
+								<button class="sub-category-btn">直播社区</button>
+								<button class="sub-category-btn">动漫二次元</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://www.bilibili.com" target="_blank">
+									<div class="site-info">
+										<h3>哔哩哔哩</h3>
+										<p>视频弹幕网站</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i13.png" alt="bilibili">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.youtube.com" target="_blank">
+									<div class="site-info">
+										<h3>YouTube</h3>
+										<p>全球视频平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i14.png" alt="YouTube">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.spotify.com" target="_blank">
+									<div class="site-info">
+										<h3>Spotify</h3>
+										<p>音乐流媒体服务</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i15.png" alt="Spotify">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.twitch.tv" target="_blank">
+									<div class="site-info">
+										<h3>Twitch</h3>
+										<p>直播平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i16.png" alt="Twitch">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-toolbox"></i>实用工具
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">办公协作</button>
+								<button class="sub-category-btn">设计辅助</button>
+								<button class="sub-category-btn">生活工具</button>
+								<button class="sub-category-btn">文件处理</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://www.notion.so" target="_blank">
+									<div class="site-info">
+										<h3>Notion</h3>
+										<p>协作笔记工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i17.png" alt="Notion">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.canva.com" target="_blank">
+									<div class="site-info">
+										<h3>Canva</h3>
+										<p>在线设计平台</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i18.png" alt="Canva">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.evernote.com" target="_blank">
+									<div class="site-info">
+										<h3>印象笔记</h3>
+										<p>笔记管理工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i19.png" alt="Evernote">
+									</div>
+								</a>
+								<a class="site-item" href="https://www.xmind.cn" target="_blank">
+									<div class="site-info">
+										<h3>XMind</h3>
+										<p>思维导图工具</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i20.png" alt="XMind">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+			<content>
+				<div class="category-container">
+					<div class="main-category">
+						<i class="fa-solid fa-star"></i>关联站点
+					</div>
+					<div class="site-list-container">
+						<div class="site-list active">
+							<div class="sub-categories">
+								<button class="sub-category-btn active">RSS相关</button>
+								<button class="sub-category-btn">博客站点</button>
+								<button class="sub-category-btn">其他工具</button>
+							</div>
+							<div class="site-items">
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>RSS阅读器</h3>
+										<p>聚合RSS阅读页面</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i38.png" alt="RSS">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>RSShub实例</h3>
+										<p>基于fly.io部署的RSShub</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i39.png" alt="RSShub">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>个人博客</h3>
+										<p>技术分享与生活记录</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i37.png" alt="博客">
+									</div>
+								</a>
+								<a class="site-item" href="https://" target="_blank">
+									<div class="site-info">
+										<h3>工具集合</h3>
+										<p>常用在线工具导航</p>
+									</div>
+									<div class="site-icon">
+										<img src="./static/img/i14.png" alt="工具">
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</content>
+		</br>
+			<div class="projectItemRightimg">
+				<img src="static/img/1bae.gif" id="img-1" />
+				<img src="static/img/2bae.gif" id="img-1" />
+				<img src="static/img/3bae.gif" id="img-1" />
+				<img src="static/img/4bae.gif" id="img-1" />	
+				<img src="static/img/5bae.gif" id="img-1" />
+				<img src="static/img/6bae.gif" id="img-1" />
+			</div>
+		</br>
+	</content>
+	<footer>		
+		<span class="astro-OY55P3EK">
+			<span class="astro-OY55P3EK">© 2024 个人引导页 | 由 <a href="https://github.com/你的账号" target="_blank">你的名字</a> 创建</span>
+			<br>
+			<span>网站已运行：<span id="timeDate"></span><span id="times"></span></span>
+		</span>
+		<script>
+			var now = new Date();
+			function createtime() {
+				var grt = new Date("01/01/2024 00:00:00");
+				now.setTime(now.getTime()+250);
+				var days = (now - grt ) / 1000 / 60 / 60 / 24;
+				var dnum = Math.floor(days);
+				var hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+				var hnum = Math.floor(hours);
+				if(String(hnum).length == 1) {
+					hnum = "0" + hnum;
+				}
+				document.getElementById("timeDate").innerHTML = dnum + " 天 ";
+				document.getElementById("times").innerHTML = hnum + " 小时";
+			}
+			setInterval(createtime, 250);
+			createtime(); // 立即执行一次
+		</script>
+	</footer>
+	<div class="tc">
+		<!-- <div class="tc-main">
+			<img class="tc-img" src="" alt="" srcset="">
+			<div class="content"></div>
+		</div> -->
+		<script>
+			// 使用 fetch API 请求指定的 URL
+			fetch('https://www.wudada.online/Api/ScD')
+				.then(response => response.json())
+				.then(data => {
+					// 检查data是否为null
+					if (data === null) {
+						// 如果data为null，显示默认错误消息
+						const contentDiv = document.querySelector('.content');
+						const p = document.createElement('p');
+						p.textContent = '请求失败，没有返回有效信息';
+						contentDiv.appendChild(p);
+					} else {
+						// 如果data不是null，检查code字段
+						if (data.code === '200') {
+							// 如果code是200，显示content字段的信息
+							const contentDiv = document.querySelector('.content');
+							data.data.content.forEach(item => {
+								const p = document.createElement('p');
+								p.textContent = item.content;
+								contentDiv.appendChild(p);
+							});
+						} else {
+							// 如果code不是200，显示msg字段的信息
+							const contentDiv = document.querySelector('.content');
+							const p = document.createElement('p');
+							p.textContent = data.msg || '请求失败，没有返回有效信息';
+							contentDiv.appendChild(p);
+						}
+					}
+				})
+				.catch(error => {
+					console.error('请求出错:', error);
+				});
+		</script>
+
+<script>
+    // 当文档加载完毕时执行
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取摸鱼日历API的URL
+        var apiURL = 'https://api.vvhan.com/api/moyu?type=json';
+
+        // 使用fetch API请求摸鱼日历API
+        fetch(apiURL)
+            .then(function(response) {
+                // 确保响应的状态是OK的
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                // 解析JSON响应
+                return response.json();
+            })
+            .then(function(data) {
+                // 假设API返回的图片URL在data.url中
+                // 更新图片元素的src属性并显示图片
+                var moyuImage = document.getElementById('moyuImage');
+                moyuImage.src = data.url;
+            })
+            .catch(function(error) {
+                // 在控制台打印错误信息
+                console.error('Error fetching moyu calendar:', error);
+                // 在页面上显示错误信息
+                var moyuImage = document.getElementById('moyuImage');
+                moyuImage.alt = '获取失败，请稍后再试。';
+            });
+    });
+</script>
+<script>
+	function updateClock() {
+	  const now = new Date();
+	  const year = now.getFullYear();
+	  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+	  const day = now.getDate().toString().padStart(2, '0');
+	  const hours = now.getHours().toString().padStart(2, '0');
+	  const minutes = now.getMinutes().toString().padStart(2, '0');
+	  document.getElementById('clock').textContent = `${year}年${month}月${day}日 ${hours}点${minutes}分`;
+	}
+  
+	// 初始更新时钟
+	updateClock();
+	// 每分钟更新时钟
+	setInterval(updateClock, 60000);
+  </script>
+  <script>
+    var weekday = new Array(7);
+    weekday[0] = "周日";
+    weekday[1] = "周一";
+    weekday[2] = "周二";
+    weekday[3] = "周三";
+    weekday[4] = "周四";
+    weekday[5] = "周五";
+    weekday[6] = "周六";
+
+    
+    var today = new Date();
+    var hrs = today.getHours();
+    var dayOfWeek = weekday[today.getDay()];
+    var date = dayOfWeek+" "   ;
+
+    var greet;
+
+    if (hrs >= 0 && hrs <= 4)
+        greet = "🙃 凌晨好  ";
+    if (hrs >= 5 && hrs <= 8) 
+        greet = "😘 早上好  ";
+    if (hrs >= 9 && hrs <= 11) 
+        greet = "😜 上午好  ";
+    if (hrs >= 11 && hrs <= 13) 
+        greet = "🥳 中午好  ";
+    if (hrs >= 13 && hrs <= 17) 
+        greet = "🥰 下午好  ";
+    if (hrs >= 18 && hrs <= 19) 
+        greet = "🧐 傍晚好  ";
+    if (hrs >= 19 && hrs <= 22) 
+       greet = "🥳 晚上好  ";
+    if (hrs >= 22 && hrs <= 24) 
+       greet = "🥺 夜深了  ";
+
+    document.getElementById('lbl').innerHTML =
+        greet+=`今天是：${date}</div>`;
+</script> 
+	</div>
+</body>
+<script src="./static/js/script.js"> </script>
+<script src="./static/js/Meting.min.js"> </script>
+<script src="./static/js/loading.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		// 书摘文本
+		const text = "大胆去做，不要怕，\n没有人在乎，\n就算有人在乎\n人又算什么东西。";
+		const author = "毛姆《刀锋》";
+		const color = "ffffff"; // 白色文字
+		const bgcolor = "000000"; // 黑色背景
+		
+		// 构建API URL
+		const apiUrl = `https://api.vvhan.com/api/artText?text=${encodeURIComponent(text)}&auther=${encodeURIComponent(author)}&color=${color}&bgcolor=${bgcolor}`;
+		
+		// 获取图片元素
+		const artTextImage = document.getElementById('artTextImage');
+		
+		// 设置图片源
+		artTextImage.src = apiUrl;
+		
+		// 错误处理
+		artTextImage.onerror = function() {
+			console.error('书摘图片加载失败');
+			artTextImage.alt = '获取失败，请稍后再试';
+		};
+	});
+</script>
+</html>
